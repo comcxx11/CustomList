@@ -79,7 +79,11 @@ struct ContentView: View {
                         }
                     }.onDelete(perform: deleteItem)
                 }
-            }.listStyle(GroupedListStyle())
+//            }.listStyle(GroupedListStyle())
+//            }.listStyle(DefaultListStyle())
+//            }.listStyle(InsetListStyle())
+//            }.listStyle(InsetGroupedListStyle())
+            }.listStyle(SidebarListStyle())
                 .navigationTitle("Posts")
         }
     }
@@ -120,6 +124,23 @@ struct tags: View {
                     .stroke(.blue, lineWidth: 0.5)
                )
            }
+        }
+    }
+}
+
+struct nospaceTags: View {
+    
+    var tags: Array<String>
+    
+    var body: some View {
+        HStack {
+            ForEach(tags, id: \.self) { tag in
+                Text("\(tag)")
+                    .font(.footnote)
+                    .fontWeight(.bold)
+                    .padding(.vertical, 2)
+                    .foregroundColor(.black)
+            }
         }
     }
 }
