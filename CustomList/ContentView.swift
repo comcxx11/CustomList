@@ -51,25 +51,29 @@ struct ContentView: View {
                 Section (header: GroupedListHeader(), footer: GroupedListFooter()) {
                     ForEach(d, id: \.self) { m in
                         VStack {
-                            Image(m.Image)
-                                .resizable()
-                                .frame(width: 120, height: 90)
-                            VStack(alignment: .leading, spacing: 8) {
-                                
-                                Text(m.title)
-                                    .bold()
-                                    .font(.subheadline)
-                                    .lineLimit(1)
-                                Text("The Happy Programmer")
-                                    .font(.caption2)
-                                    .foregroundColor(.gray)
+                            NavigationLink(destination: Text(m.title)) {
                                 HStack {
-                                    ProgressView(value: m.percentage)
-                                        .progressViewStyle(LinearProgressViewStyle(tint: Color.pink))
-                                        .foregroundColor(.red)
-                                    Text(String(format: "%.0f%%", m.percentage * 100))
-                                        .font(.caption2)
-                                        .foregroundColor(.gray)
+                                    Image(m.Image)
+                                        .resizable()
+                                        .frame(width: 120, height: 90)
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        tags(tags: m.postType)
+                                        Text(m.title)
+                                            .bold()
+                                            .font(.subheadline)
+                                            .lineLimit(1)
+                                        Text("The Happy Programmer")
+                                            .font(.caption2)
+                                            .foregroundColor(.gray)
+                                        HStack {
+                                            ProgressView(value: m.percentage)
+                                                .progressViewStyle(LinearProgressViewStyle(tint: Color.pink))
+                                                .foregroundColor(.red)
+                                            Text(String(format: "%.0f%%", m.percentage * 100))
+                                                .font(.caption2)
+                                                .foregroundColor(.gray)
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -98,6 +102,24 @@ struct GroupedListHeader: View {
         HStack {
             Image(systemName: "tray.full.fill")
             Text("All Posts from The Happy Programmer")
+        }
+    }
+}
+
+struct tags: View {
+    var tags: Array<String>
+    var body: some View {
+        HStack {
+        ForEach(tags, id: \.self) { e in
+            Text(e)
+                .foregroundColor(.blue)
+                .font(.system(size: 6))
+                .padding(4)
+                .overlay(
+                   RoundedRectangle(cornerRadius: 10)
+                    .stroke(.blue, lineWidth: 0.5)
+               )
+           }
         }
     }
 }
